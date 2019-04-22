@@ -17,7 +17,7 @@ master_connection = None
 master_lock = Lock()
 
 # Time intervals of importance to program operation
-intervals = { "inactive": 60, "to_sleep": 150, "charging": 90, "running": 30, "recent": 60, "prep": 60, "Unknown": 15, "any_poll": 10000, "running_poll": 300, "charging_poll": 900, "recent_interval": 500 }
+intervals = { "inactive": 60, "to_sleep": 900, "charging": 90, "running": 30, "recent": 60, "prep": 60, "Unknown": 15, "any_poll": 10000, "running_poll": 300, "charging_poll": 900, "recent_interval": 500 }
 
 
 
@@ -380,8 +380,8 @@ def monitor_vehicle(vehicle, args, queue):
         intrvl = 6 * 10**backoff
         W.write("# %d Disaster sleep for %d\n"%(time.time(),intrvl))
         time.sleep(intrvl)
-        wake(vehicle)
-        state = "recent"
+        # Do no wake here--except will kill perm
+        state = "Unknown"
 
 
 parser = argparse.ArgumentParser()
